@@ -193,6 +193,7 @@ export const en = {
       note: `This is the teen path. Adults ${adultCourse.minimumAge} and over take a shorter ${adultCourse.hours}-hour course.`,
       noteLink: "See adult classes",
       progressLabel: "Progress",
+      tapHint: "Select any stop to jump to it",
       steps: [
         {
           n: "01",

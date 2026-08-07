@@ -181,19 +181,61 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
           aria-hidden="true"
           className="absolute inset-x-0 bottom-7 z-10 hidden justify-center md:flex"
         >
-          <div className="flex flex-col items-center gap-2.5">
+          <div className="flex flex-col items-center gap-3">
             <span className="text-[0.6875rem] uppercase tracking-[0.18em] text-white/55">
               {dict.home.hero.scrollHint}
             </span>
-            <motion.span
-              animate={{ y: [0, 7, 0] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-              className="block h-9 w-px bg-gradient-to-b from-white/60 to-transparent"
-            />
+
+            {/* A little car driving down a lane marking — the same road motif
+                used by the journey section, shrunk into the scroll cue. */}
+            <div className="relative h-12 w-7">
+              <span
+                aria-hidden="true"
+                className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.45)_0_5px,transparent_5px_12px)]"
+              />
+              <motion.span
+                aria-hidden="true"
+                className="absolute left-1/2 top-0 -translate-x-1/2 text-white"
+                animate={{ y: [-2, 34], opacity: [0, 1, 1, 0] }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  times: [0, 0.18, 0.8, 1],
+                }}
+              >
+                <LineCar className="h-6 w-auto" />
+              </motion.span>
+            </div>
           </div>
         </motion.div>
       )}
     </section>
+  );
+}
+
+/** Little top-down car, drawn in outline so it reads at ~20px. */
+function LineCar({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 20 30"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      {/* body */}
+      <rect x="3.4" y="1.6" width="13.2" height="26.8" rx="4.6" />
+      {/* windscreen + rear window */}
+      <path d="M6.2 9.1h7.6M6.2 20.6h7.6" />
+      {/* roof line */}
+      <path d="M10 11.4v7.2" />
+      {/* wing mirrors */}
+      <path d="M3.4 11.2H1.7M16.6 11.2h1.7" />
+    </svg>
   );
 }
 

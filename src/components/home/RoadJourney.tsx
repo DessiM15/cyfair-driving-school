@@ -36,6 +36,7 @@ export function RoadJourney({ lang, dict }: { lang: Lang; dict: Dictionary }) {
   const pathRef = useRef<SVGPathElement>(null);
 
   const [active, setActive] = useState(0);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const [markers, setMarkers] = useState<{ x: number; y: number }[]>([]);
 
   const { scrollYProgress } = useScroll({
@@ -84,6 +85,27 @@ export function RoadJourney({ lang, dict }: { lang: Lang; dict: Dictionary }) {
 
   const drawn = useTransform(scrollYProgress, [0, 1], [0.04, 1]);
 
+  /**
+   * Jump to a step by clicking its marker.
+   *
+   * The section is pinned, so "showing" a step means scrolling to the position
+   * whose progress lands the car in the middle of that step's band — the same
+   * arithmetic the scroll handler uses, run backwards.
+   */
+  const goToStep = (index: number) => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const range = el.offsetHeight - window.innerHeight;
+    if (range <= 0) return;
+
+    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
+    const desiredTravel = (index + 0.5) / steps.length;
+    const progress = Math.min(Math.max((desiredTravel - 0.02) / 0.96, 0), 1);
+
+    window.scrollTo({ top: sectionTop + progress * range, behavior: "smooth" });
+  };
+
   /* ---------------- reduced motion / small screens: plain timeline -------- */
   if (calm) {
     return <StaticTimeline lang={lang} dict={dict} />;
@@ -110,6 +132,7 @@ export function RoadJourney({ lang, dict }: { lang: Lang; dict: Dictionary }) {
               <p className="eyebrow text-sky-300">{t.eyebrow}</p>
               <h2 className="display-2 mt-4 text-white">{t.title}</h2>
               <p className="mt-4 text-white/65">{t.subtitle}</p>
+              <p className="mt-3 text-sm text-sky-300/70">{t.tapHint}</p>
             </div>
 
             {/* The road */}
@@ -151,27 +174,59 @@ export function RoadJourney({ lang, dict }: { lang: Lang; dict: Dictionary }) {
                 {/* Step markers */}
                 {markers.map((m, i) => {
                   const reached = i <= active;
+                  const isCurrent = i === active;
+                  const hot = hoveredStep === i;
                   return (
-                    <g key={steps[i].n}>
-                      {reached && (
-                        <circle cx={m.x} cy={m.y} r={26} fill="#4585c5" fillOpacity={0.18} />
+                    <g
+                      key={steps[i].n}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${steps[i].n} — ${steps[i].title}`}
+                      onClick={() => goToStep(i)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          goToStep(i);
+                        }
+                      }}
+                      onMouseEnter={() => setHoveredStep(i)}
+                      onMouseLeave={() => setHoveredStep(null)}
+                      onFocus={() => setHoveredStep(i)}
+                      onBlur={() => setHoveredStep(null)}
+                      className="cursor-pointer outline-none"
+                    >
+                      {/* Generous invisible hit area — the visible dot is small. */}
+                      <circle cx={m.x} cy={m.y} r={34} fill="transparent" />
+                      {(reached || hot) && (
+                        <circle
+                          cx={m.x}
+                          cy={m.y}
+                          r={hot ? 30 : 26}
+                          fill="#4585c5"
+                          fillOpacity={hot ? 0.3 : 0.18}
+                          style={{ transition: "r 250ms ease, fill-opacity 250ms ease" }}
+                        />
                       )}
                       <circle
                         cx={m.x}
                         cy={m.y}
-                        r={13}
+                        r={hot ? 16 : 13}
                         fill={reached ? "#4585c5" : "#0d1738"}
-                        stroke={reached ? "#ffffff" : "rgba(255,255,255,0.35)"}
-                        strokeWidth="2.5"
-                        style={{ transition: "fill 350ms ease, stroke 350ms ease" }}
+                        stroke="#ffffff"
+                        strokeWidth={isCurrent || hot ? 3 : 2.5}
+                        strokeOpacity={reached || hot ? 1 : 0.35}
+                        style={{
+                          transition:
+                            "fill 350ms ease, stroke-opacity 350ms ease, r 250ms ease, stroke-width 250ms ease",
+                        }}
                       />
                       <text
                         x={m.x}
-                        y={m.y - 32}
+                        y={m.y - (hot ? 36 : 32)}
                         textAnchor="middle"
-                        className="font-sans text-[13px] font-semibold"
-                        fill={reached ? "#ffffff" : "rgba(255,255,255,0.45)"}
-                        style={{ transition: "fill 350ms ease" }}
+                        className="pointer-events-none select-none font-sans text-[13px] font-semibold"
+                        fill={reached || hot ? "#ffffff" : "rgba(255,255,255,0.45)"}
+                        style={{ transition: "fill 350ms ease, y 250ms ease" }}
                       >
                         {steps[i].title}
                       </text>

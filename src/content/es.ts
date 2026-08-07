@@ -195,6 +195,7 @@ export const es: Dictionary = {
       note: `Este es el camino para adolescentes. Los adultos de ${adultCourse.minimumAge} años en adelante toman un curso más corto, de ${adultCourse.hours} horas.`,
       noteLink: "Ver clases para adultos",
       progressLabel: "Progreso",
+      tapHint: "Selecciona cualquier parada para ir a ella",
       steps: [
         {
           n: "01",
