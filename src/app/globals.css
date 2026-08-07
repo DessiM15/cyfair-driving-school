@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Navy and sky are lifted directly from the logo SVG (#25459a / #4585c5).
+   The neutrals are warm rather than grey, which keeps the light direction from
+   reading cold and corporate.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-navy-50: #f2f6fe;
+  --color-navy-100: #e3eafb;
+  --color-navy-200: #c6d5f5;
+  --color-navy-300: #9db6ec;
+  --color-navy-400: #6b90e0;
+  --color-navy-500: #3d6ad0;
+  --color-navy-600: #2f55b8;
+  --color-navy-700: #25459a;
+  --color-navy-800: #1c3378;
+  --color-navy-900: #16265c;
+  --color-navy-950: #0d1738;
+
+  --color-sky-100: #e4eff8;
+  --color-sky-200: #c5dcf1;
+  --color-sky-300: #9cc1e5;
+  --color-sky-400: #6fa3d6;
+  --color-sky-500: #4585c5;
+  --color-sky-600: #2f6ba8;
+
+  /* Warm neutrals */
+  --color-paper: #fbfaf8;
+  --color-cream: #f6f2ec;
+  --color-sand: #ece5d9;
+  --color-sand-dark: #d9cfbd;
+
+  --color-ink: #14203a;
+  --color-ink-soft: #3a4560;
+  --color-muted: #6b7590;
+
+  --color-amber-signal: #d98324;
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1.25rem;
+
+  --shadow-soft: 0 1px 2px rgb(20 32 58 / 0.04), 0 8px 24px -8px rgb(20 32 58 / 0.10);
+  --shadow-lift: 0 2px 4px rgb(20 32 58 / 0.05), 0 20px 44px -16px rgb(20 32 58 / 0.18);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    /* Anchor links land below the sticky header. */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-navy-700);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-navy-200);
+    color: var(--color-navy-950);
+  }
+
+  /* Respect the user's motion preference everywhere, including our JS-driven
+     reveals, which check the same media query. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components / utilities
+--------------------------------------------------------------------------- */
+@layer components {
+  .container-page {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    max-width: 80rem;
+  }
+  @media (min-width: 768px) {
+    .container-page { padding-inline: 2rem; }
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy-700);
+  }
+
+  /* Fluid display type — scales smoothly instead of stepping at breakpoints. */
+  .display-1 { font-size: clamp(2.5rem, 1.2rem + 5.4vw, 5.5rem); line-height: 0.98; }
+  .display-2 { font-size: clamp(2rem, 1.2rem + 3.2vw, 3.5rem); line-height: 1.06; }
+  .display-3 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.15; }
+
+  .prose-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+  .prose-body p + p { margin-top: 1.1em; }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(to right, var(--color-sand-dark), transparent);
+  }
+}
+
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+/* Hide scrollbars on horizontal rails while keeping them scrollable. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Print: the road-test checklist is meant to be printed and carried. */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+}
