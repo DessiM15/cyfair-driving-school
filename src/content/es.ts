@@ -23,6 +23,7 @@ export const es: Dictionary = {
     defensive: "Manejo defensivo",
     instructors: "Para instructores",
     payments: "Pagos en línea",
+    paymentsShort: "Pagos",
     locations: "Ubicaciones",
     about: "Nosotros",
     contact: "Contacto",

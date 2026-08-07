@@ -67,12 +67,14 @@ export function Header({ lang, dict }: { lang: Lang; dict: Dictionary }) {
     { href: "/adult-drivers-education", label: dict.nav.adults },
     { href: "/road-tests", label: dict.nav.roadTests },
     { href: "/defensive-driving", label: dict.nav.defensive },
+    // Payments is promoted out of the "More" menu — people looking to pay
+    // shouldn't have to hunt through a dropdown for it.
+    { href: "/online-payments", label: dict.nav.paymentsShort },
   ];
 
   const moreLinks = [
     { href: "/approved-road-test-locations", label: dict.nav.locations },
     { href: "/instructors", label: dict.nav.instructors },
-    { href: "/online-payments", label: dict.nav.payments },
     { href: "/find-your-course", label: dict.quiz.hero.title },
     { href: "/road-test-checklist", label: dict.checklist.hero.title },
     { href: "/about-us", label: dict.nav.about },

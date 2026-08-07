@@ -53,7 +53,7 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
   return (
     <section
       ref={containerRef}
-      className="relative flex min-h-[100svh] items-end overflow-hidden bg-navy-950"
+      className="relative flex min-h-[100svh] items-center overflow-hidden bg-navy-950"
     >
       {/* Media layer */}
       <motion.div
@@ -90,23 +90,26 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
         )}
       </motion.div>
 
-      {/* Scrims: strong enough for AA contrast on the headline, soft enough that
-          the footage still reads as bright and open. */}
+      {/* Scrims. The footage is deliberately pushed well back: an even base wash
+          plus a vertical gradient, so the video reads as atmosphere rather than
+          competing with the headline. Symmetric now that the text is centred. */}
+      <div aria-hidden="true" className="absolute inset-0 bg-navy-950/48" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-navy-950/92 via-navy-950/45 to-navy-950/25"
+        className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/25 to-navy-950/60"
       />
+      {/* Gentle vignette to keep the eye on the centre. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-navy-950/70 via-transparent to-transparent"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(13,23,56,0.45)_100%)]"
       />
 
       {/* Content */}
       <motion.div
         style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
-        className="container-page relative z-10 pb-28 pt-36 md:pb-36"
+        className="container-page relative z-10 py-32 md:py-28"
       >
-        <div className="max-w-4xl">
+        <div className="mx-auto max-w-4xl text-center">
           <motion.p
             {...stagger(0)}
             className="text-[0.8125rem] font-semibold uppercase tracking-[0.16em] text-sky-300"
@@ -125,12 +128,15 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
 
           <motion.p
             {...stagger(3)}
-            className="mt-7 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl"
+            className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl"
           >
             {dict.home.hero.subtitle}
           </motion.p>
 
-          <motion.div {...stagger(4)} className="mt-10 flex flex-wrap items-center gap-3">
+          <motion.div
+            {...stagger(4)}
+            className="mt-10 flex flex-wrap items-center justify-center gap-3"
+          >
             <ButtonLink href={localePath("/contact-us", lang)} variant="light" size="lg">
               {dict.home.hero.primaryCta}
             </ButtonLink>
@@ -144,7 +150,10 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
           </motion.div>
 
           {/* Trust chips */}
-          <motion.ul {...stagger(5)} className="mt-12 flex flex-wrap gap-x-7 gap-y-3">
+          <motion.ul
+            {...stagger(5)}
+            className="mt-12 flex flex-wrap justify-center gap-x-7 gap-y-3"
+          >
             {dict.home.trustBar.items.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-white/75">
                 <CheckIcon className="size-4 shrink-0 text-sky-300" />

@@ -19,6 +19,8 @@ export const en = {
     defensive: "Defensive Driving",
     instructors: "For Instructors",
     payments: "Online Payments",
+    /** Shorter label for the top nav, where horizontal space is tight. */
+    paymentsShort: "Payments",
     locations: "Locations",
     about: "About",
     contact: "Contact",
