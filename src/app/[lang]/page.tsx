@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Hero } from "@/components/home/Hero";
+import { ClassStartStrip } from "@/components/ClassStartStrip";
 import { RoadJourney } from "@/components/home/RoadJourney";
 import { CourseCard } from "@/components/home/CourseCard";
 import { MaskFigure } from "@/components/motion/MaskFigure";
@@ -44,6 +45,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero lang={lang} dict={dict} />
+      <ClassStartStrip lang={lang} dict={dict} />
 
       {/* ---- Editorial intro with layered imagery ---- */}
       <Section tone="paper" spacing="loose">

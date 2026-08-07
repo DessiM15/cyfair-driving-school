@@ -68,6 +68,12 @@ export const es: Dictionary = {
     sinceYear: `Sirviendo a Houston desde ${business.foundedYear}`,
   },
 
+  schedule: {
+    everyWeeks: "Cada {weeks} semanas inicia una nueva clase para adolescentes",
+    nextClass: "La próxima clase para adolescentes inicia el {date}",
+    cta: "Aparta tu lugar",
+  },
+
   home: {
     metaTitle: `Escuela de Manejo en Houston y Cypress, TX | ${business.name}`,
     metaDescription:

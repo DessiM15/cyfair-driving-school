@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageHero } from "@/components/PageHero";
+import { ClassStartStrip } from "@/components/ClassStartStrip";
 import { CtaBand } from "@/components/CtaBand";
 import { Faq } from "@/components/Faq";
 import { Container, Section, SectionHeading } from "@/components/ui/Section";
@@ -50,6 +51,8 @@ export default async function TeenPage({ params }: { params: Promise<{ lang: str
           <CallButton phone={business.phone} phoneHref={business.phoneHref} size="lg" />
         </div>
       </PageHero>
+
+      <ClassStartStrip lang={lang} dict={dict} />
 
       {/* What is the course */}
       <Section tone="paper">

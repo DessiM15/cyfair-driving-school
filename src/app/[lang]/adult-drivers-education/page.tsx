@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageHero } from "@/components/PageHero";
+import { ClassStartStrip } from "@/components/ClassStartStrip";
 import { CtaBand } from "@/components/CtaBand";
 import { Testimonials } from "@/components/Testimonials";
 import { Container, Section, SectionHeading } from "@/components/ui/Section";
@@ -50,6 +51,8 @@ export default async function AdultPage({ params }: { params: Promise<{ lang: st
           <CallButton phone={business.phone} phoneHref={business.phoneHref} size="lg" />
         </div>
       </PageHero>
+
+      <ClassStartStrip lang={lang} dict={dict} />
 
       {/* Spanish banner — this is a genuine differentiator for this market, so it
           gets real prominence rather than a footnote. */}

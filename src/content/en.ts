@@ -66,6 +66,12 @@ export const en = {
     sinceYear: `Serving Houston since ${business.foundedYear}`,
   },
 
+  schedule: {
+    everyWeeks: "New teen classes start every {weeks} weeks",
+    nextClass: "Next teen class starts {date}",
+    cta: "Reserve your place",
+  },
+
   home: {
     metaTitle: `Driving School in Houston & Cypress, TX | ${business.name}`,
     metaDescription:
