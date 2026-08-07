@@ -36,6 +36,8 @@ export const en = {
     callUs: "Call us",
     callToEnroll: "Call to enroll",
     enrollToday: "Enroll today",
+    /** Compact label for the mobile sticky bar, where space is tight. */
+    enrollShort: "Enroll",
     requestClassTime: "Request a class time",
     bookRoadTest: "Book a road test",
     learnMore: "Learn more",
@@ -174,6 +176,47 @@ export const en = {
         {
           title: "One-on-one help when it's needed",
           body: "We work with students who have learning disabilities to make sure the course is genuinely accessible.",
+        },
+      ],
+    },
+    journey: {
+      eyebrow: "The process",
+      title: "Your road to a license",
+      subtitle:
+        "Exactly what happens, from the first phone call to the day you drive away licensed.",
+      note: `This is the teen path. Adults ${adultCourse.minimumAge} and over take a shorter ${adultCourse.hours}-hour course.`,
+      noteLink: "See adult classes",
+      progressLabel: "Progress",
+      steps: [
+        {
+          n: "01",
+          title: "Enroll",
+          body: `Call us and we'll find the next class that fits around school, work and family. A new teen class generally begins every ${teenCourse.newClassEveryWeeks} weeks.`,
+        },
+        {
+          n: "02",
+          title: "Classroom",
+          body: `${teenCourse.classroomHours} hours of TDLR-approved classroom instruction, with day, evening and weekend options across the greater Houston area.`,
+        },
+        {
+          n: "03",
+          title: "Permit certificate",
+          body: `After ${teenCourse.permitTestAfterHours} hours of the course you sit the permit test. Pass it, and your permit certificate is issued.`,
+        },
+        {
+          n: "04",
+          title: "Behind the wheel",
+          body: `${teenCourse.behindTheWheelHours} hours driving with a patient, certified instructor, plus ${teenCourse.observationHours} hours of observation. Plenty of drive time slots every day.`,
+        },
+        {
+          n: "05",
+          title: "Road test",
+          body: `Take your DPS-authorized road test with us at Queenston, Eldridge or Barker Cypress — $${pricing.roadTest.price}, with up to ${pricing.roadTest.attempts} chances to pass.`,
+        },
+        {
+          n: "06",
+          title: "Licensed",
+          body: "Safe driving, bright future. You're on the road — and you learned to do it properly.",
         },
       ],
     },

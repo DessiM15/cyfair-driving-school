@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ButtonLink, CallButton, PhoneIcon } from "@/components/ui/Button";
+import { ButtonLink, PhoneIcon } from "@/components/ui/Button";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { KineticText } from "@/components/motion/KineticText";
 import { heroVideo } from "@/content/images";
 import { business } from "@/content/site";
 import type { Dictionary } from "@/content/en";
@@ -117,13 +119,15 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
             {dict.home.hero.eyebrow}
           </motion.p>
 
+          {/* Words unmask from beneath rather than fading in — the line reads
+              as being uncovered, which is most of the hero's character. */}
           <h1 className="mt-6 font-display text-white">
-            <motion.span {...stagger(1)} className="display-1 block">
-              {dict.home.hero.title}
-            </motion.span>
-            <motion.span {...stagger(2)} className="display-1 block text-sky-300">
-              {dict.home.hero.titleAccent}
-            </motion.span>
+            <span className="display-1 block">
+              <KineticText text={dict.home.hero.title} delay={0.28} />
+            </span>
+            <span className="display-1 block text-sky-300">
+              <KineticText text={dict.home.hero.titleAccent} delay={0.46} />
+            </span>
           </h1>
 
           <motion.p
@@ -137,16 +141,20 @@ export function Hero({ lang, dict }: { lang: Lang; dict: Dictionary }) {
             {...stagger(4)}
             className="mt-10 flex flex-wrap items-center justify-center gap-3"
           >
-            <ButtonLink href={localePath("/contact-us", lang)} variant="light" size="lg">
-              {dict.home.hero.primaryCta}
-            </ButtonLink>
-            <a
-              href={business.phoneHref}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/55 px-8 py-4 text-base font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white hover:bg-white/12"
-            >
-              <PhoneIcon className="size-4" />
-              {dict.home.hero.secondaryCta}
-            </a>
+            <MagneticButton>
+              <ButtonLink href={localePath("/contact-us", lang)} variant="light" size="lg">
+                {dict.home.hero.primaryCta}
+              </ButtonLink>
+            </MagneticButton>
+            <MagneticButton>
+              <a
+                href={business.phoneHref}
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/55 px-8 py-4 text-base font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white hover:bg-white/12"
+              >
+                <PhoneIcon className="size-4" />
+                {dict.home.hero.secondaryCta}
+              </a>
+            </MagneticButton>
           </motion.div>
 
           {/* Trust chips */}

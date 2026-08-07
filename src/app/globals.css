@@ -88,6 +88,26 @@
     color: var(--color-navy-950);
   }
 
+  /* Paper grain.
+     A fixed, non-interactive noise layer over the whole page. Flat off-white
+     reads as "a hex value"; a trace of grain reads as stock. Kept very low
+     opacity — it should be felt rather than seen, and it must never sit above
+     the header, chat widget or sticky call bar. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  @media print {
+    body::after { display: none; }
+  }
+
   /* Respect the user's motion preference everywhere, including our JS-driven
      reveals, which check the same media query. */
   @media (prefers-reduced-motion: reduce) {

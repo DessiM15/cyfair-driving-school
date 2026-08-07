@@ -6,6 +6,9 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollManager } from "@/components/ScrollManager";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { PageTransition } from "@/components/PageTransition";
+import { StickyCallBar } from "@/components/StickyCallBar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { getDictionary, isLang, LANGS, HTML_LANG, type Lang } from "@/lib/i18n";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/seo";
@@ -67,9 +70,13 @@ export default async function RootLayout({
     <html lang={HTML_LANG[lang]} className={`${fraunces.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">
         <ScrollManager />
+        <ScrollProgress />
         <Header lang={lang} dict={dict} />
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer lang={lang} dict={dict} />
+        <StickyCallBar lang={lang} dict={dict} />
         <ChatWidget lang={lang} dict={dict} />
         <JsonLd data={[organizationSchema(lang), websiteSchema(lang)]} />
       </body>

@@ -39,6 +39,7 @@ export const es: Dictionary = {
     callUs: "Llámanos",
     callToEnroll: "Llama para inscribirte",
     enrollToday: "Inscríbete hoy",
+    enrollShort: "Inscríbete",
     requestClassTime: "Solicita un horario de clase",
     bookRoadTest: "Agenda tu examen de manejo",
     learnMore: "Más información",
@@ -177,6 +178,47 @@ export const es: Dictionary = {
         {
           title: "Atención personalizada cuando hace falta",
           body: "Trabajamos con estudiantes con dificultades de aprendizaje para que el curso sea realmente accesible.",
+        },
+      ],
+    },
+    journey: {
+      eyebrow: "El proceso",
+      title: "Tu camino a la licencia",
+      subtitle:
+        "Exactamente qué pasa, desde la primera llamada hasta el día que manejas con tu licencia en mano.",
+      note: `Este es el camino para adolescentes. Los adultos de ${adultCourse.minimumAge} años en adelante toman un curso más corto, de ${adultCourse.hours} horas.`,
+      noteLink: "Ver clases para adultos",
+      progressLabel: "Progreso",
+      steps: [
+        {
+          n: "01",
+          title: "Inscríbete",
+          body: `Llámanos y encontramos la próxima clase que se ajuste a la escuela, el trabajo y la familia. Generalmente inicia una nueva clase para adolescentes cada ${teenCourse.newClassEveryWeeks} semanas.`,
+        },
+        {
+          n: "02",
+          title: "Clases teóricas",
+          body: `${teenCourse.classroomHours} horas de clase aprobadas por TDLR, con opciones de día, tarde y fin de semana en toda el área de Houston.`,
+        },
+        {
+          n: "03",
+          title: "Certificado de permiso",
+          body: `Después de ${teenCourse.permitTestAfterHours} horas del curso presentas el examen del permiso. Al aprobarlo, se emite tu certificado.`,
+        },
+        {
+          n: "04",
+          title: "Práctica al volante",
+          body: `${teenCourse.behindTheWheelHours} horas manejando con un instructor certificado y paciente, más ${teenCourse.observationHours} horas de observación. Muchos horarios disponibles todos los días.`,
+        },
+        {
+          n: "05",
+          title: "Examen de manejo",
+          body: `Presenta tu examen autorizado por DPS con nosotros en Queenston, Eldridge o Barker Cypress — $${pricing.roadTest.price}, con hasta ${pricing.roadTest.attempts} oportunidades para aprobar.`,
+        },
+        {
+          n: "06",
+          title: "¡Con licencia!",
+          body: "Maneja seguro, futuro brillante. Ya estás en el camino — y aprendiste a hacerlo bien.",
         },
       ],
     },

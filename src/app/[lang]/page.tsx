@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Hero } from "@/components/home/Hero";
+import { RoadJourney } from "@/components/home/RoadJourney";
+import { CourseCard } from "@/components/home/CourseCard";
+import { MaskFigure } from "@/components/motion/MaskFigure";
+import { RoadDivider } from "@/components/motion/RoadDivider";
 import { Testimonials } from "@/components/Testimonials";
 import { CoverageMap } from "@/components/CoverageMap";
 import { CtaBand } from "@/components/CtaBand";
@@ -12,7 +15,6 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
 
-import { images, imageAlt } from "@/content/images";
 import { business } from "@/content/site";
 import { getDictionary, isLang, localePath, type Lang } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
@@ -68,33 +70,28 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               </Reveal>
             </div>
 
-            {/* Offset image pair — the asymmetry is what gives the section depth */}
+            {/* Offset image pair. The two photographs wipe open and drift at
+                different rates, which is what gives the block real depth
+                rather than looking like two boxes side by side. */}
             <div className="lg:col-span-7">
               <div className="grid grid-cols-2 gap-4 md:gap-6">
-                <Reveal className="pt-10 md:pt-16">
-                  <figure className="relative aspect-[3/4] overflow-hidden rounded-[--radius-card] shadow-lift">
-                    <Image
-                      src={images["teen-with-parent"].src}
-                      alt={imageAlt("teen-with-parent", lang)}
-                      fill
-                      sizes="(min-width: 1024px) 28vw, 45vw"
-                      className="object-cover"
-                      style={{ backgroundColor: images["teen-with-parent"].color }}
-                    />
-                  </figure>
-                </Reveal>
-                <Reveal delay={0.12}>
-                  <figure className="relative aspect-[3/4] overflow-hidden rounded-[--radius-card] shadow-lift">
-                    <Image
-                      src={images["lesson-coaching"].src}
-                      alt={imageAlt("lesson-coaching", lang)}
-                      fill
-                      sizes="(min-width: 1024px) 28vw, 45vw"
-                      className="object-cover"
-                      style={{ backgroundColor: images["lesson-coaching"].color }}
-                    />
-                  </figure>
-                </Reveal>
+                <div className="pt-10 md:pt-16">
+                  <MaskFigure
+                    slot="teen-with-parent"
+                    lang={lang}
+                    ratio="aspect-[3/4]"
+                    sizes="(min-width: 1024px) 28vw, 45vw"
+                    parallax={26}
+                  />
+                </div>
+                <MaskFigure
+                  slot="lesson-coaching"
+                  lang={lang}
+                  ratio="aspect-[3/4]"
+                  sizes="(min-width: 1024px) 28vw, 45vw"
+                  delay={0.12}
+                  parallax={-18}
+                />
               </div>
             </div>
           </div>
@@ -125,6 +122,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       {/* ---- Courses ---- */}
       <Section tone="paper" id="courses">
         <Container>
+          <RoadDivider className="mb-16" />
           <SectionHeading
             eyebrow={dict.home.courses.eyebrow}
             title={dict.home.courses.title}
@@ -135,38 +133,23 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <RevealGroup className="grid gap-6 md:grid-cols-2">
             {dict.home.courses.items.map((course) => (
               <RevealItem key={course.key}>
-                <Link
+                <CourseCard
                   href={localePath(course.href, lang)}
-                  className="group flex h-full flex-col overflow-hidden rounded-[--radius-card] border border-sand-dark/60 bg-white shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={images[course.image].src}
-                      alt={imageAlt(course.image, lang)}
-                      fill
-                      sizes="(min-width: 768px) 46vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                      style={{ backgroundColor: images[course.image].color }}
-                    />
-                    <span className="absolute left-4 top-4 rounded-full bg-white/92 px-3 py-1.5 text-xs font-semibold text-navy-800 backdrop-blur-sm">
-                      {course.age}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-7">
-                    <h3 className="font-display text-2xl text-ink">{course.name}</h3>
-                    <p className="prose-body mt-3 flex-1 text-base">{course.summary}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-[0.9375rem] font-medium text-navy-700">
-                      {dict.common.learnMore}
-                      <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </span>
-                  </div>
-                </Link>
+                  name={course.name}
+                  age={course.age}
+                  summary={course.summary}
+                  image={course.image}
+                  lang={lang}
+                  cta={dict.common.learnMore}
+                />
               </RevealItem>
             ))}
           </RevealGroup>
         </Container>
       </Section>
+
+      {/* ---- Signature moment: the road to a license ---- */}
+      <RoadJourney lang={lang} dict={dict} />
 
       {/* ---- Course finder teaser ---- */}
       <Section tone="cream" spacing="tight">
@@ -194,18 +177,15 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Section tone="paper">
         <Container>
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
-            <Reveal className="lg:col-span-5">
-              <figure className="relative aspect-[4/5] overflow-hidden rounded-[--radius-card] shadow-lift">
-                <Image
-                  src={images["class-diverse"].src}
-                  alt={imageAlt("class-diverse", lang)}
-                  fill
-                  sizes="(min-width: 1024px) 38vw, 100vw"
-                  className="object-cover"
-                  style={{ backgroundColor: images["class-diverse"].color }}
-                />
-              </figure>
-            </Reveal>
+            <div className="lg:col-span-5">
+              <MaskFigure
+                slot="class-diverse"
+                lang={lang}
+                ratio="aspect-[4/5]"
+                sizes="(min-width: 1024px) 38vw, 100vw"
+                parallax={22}
+              />
+            </div>
 
             <div className="lg:col-span-7">
               <SectionHeading
@@ -311,13 +291,5 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         image="houston-heights"
       />
     </>
-  );
-}
-
-function ArrowRight({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={className}>
-      <path d="M4 10h12m0 0-4.5-4.5M16 10l-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }
